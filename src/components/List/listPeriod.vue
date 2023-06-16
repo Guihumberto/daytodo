@@ -18,7 +18,8 @@
         ></v-text-field>
         <!-- opcao de remover -->
         <v-list-item-title
-        v-else-if="idEdit == item.dateCreate && optionSelect == 2">
+          v-else-if="idEdit == item.dateCreate && optionSelect == 2"
+        >
           Deseja apagar esta lista?
         </v-list-item-title>
         <!-- exibicao normal -->
@@ -53,10 +54,10 @@
           </v-btn>
         </template>
         <template v-else  v-slot:append>
-          <v-btn @click.stop="optionSelect = 0, idEdit = 0" size="small" variant="text">Cancelar</v-btn>
+          <v-btn @click.stop="cancel()" size="small" variant="text">Cancelar</v-btn>
 
-          <v-btn @click.stop="optionSelect = 0, idEdit = 0"  v-if="optionSelect == 1">Editar</v-btn>
-          <v-btn color="error" @click.stop="optionSelect = 0, idEdit = 0"  v-else>Apagar</v-btn>
+          <v-btn @click.stop="editList(item)"  v-if="optionSelect == 1">Editar</v-btn>
+          <v-btn color="error" @click.stop="apagarList(item)"  v-else>Apagar</v-btn>
         </template>
       </v-list-item>
     </v-list>
@@ -80,7 +81,7 @@
           items: [
             { id: 1, title: 'Editar', icon: 'mdi-square-edit-outline' },
             { id: 2, title: 'Deletar', icon: 'mdi-delete' },
-            { id: 3, title: 'Arquivar', icon: 'mdi-archive-arrow-down' },
+            // { id: 3, title: 'Arquivar', icon: 'mdi-archive-arrow-down' },
           ],
         idEdit: 0,
         optionSelect: 0,
@@ -157,6 +158,18 @@
 
        let total = totalSoma.toFixed(2) - totalDiminuir.toFixed(2)
        return total.toFixed(2)
+      },
+      editList(item){
+        listStore.editList(item)
+        this.cancel()
+      },
+      apagarList(item){
+        listStore.deleteList(item)
+        this.cancel()
+      },
+      cancel(){
+        this.optionSelect = 0
+        this.idEdit = 0
       }
     }
   }

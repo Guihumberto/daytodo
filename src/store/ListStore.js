@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { getAuth } from "firebase/auth";
-import { getDatabase, ref, onValue, set } from "firebase/database";
+import { getDatabase, ref, onValue, set, remove, update } from "firebase/database";
 
 export const useListStore = defineStore("list", {
   state: () => ({
@@ -81,6 +81,23 @@ export const useListStore = defineStore("list", {
       const db = getDatabase();
       let userUid = getAuth().currentUser.uid
       set(ref(db, `/todo/${userUid}/list/${list.dateCreate}`), list);
+    },
+    editList(item) {
+
+      let editList = {
+        name: item.name,
+        dateCreate: item.dateCreate
+      };
+
+      const db = getDatabase();
+      let userUid = getAuth().currentUser.uid
+      update(ref(db, `/todo/${userUid}/list/${editList.dateCreate}`), editList);
+    },
+    deleteList(item) {
+      const db = getDatabase();
+      let userUid = getAuth().currentUser.uid
+
+      remove(ref(db, `/todo/${userUid}/list/${item.dateCreate}`))
     },
     completeDownload(value) {
       this.downloadOk = value;

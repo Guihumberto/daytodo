@@ -162,7 +162,9 @@
     transition="dialog-transition"
   >
     <v-card>
-      <v-card-title class="d-flex justify-space-between bg-primary">
+      <v-card-title
+        class="d-flex justify-space-between bg-primary"
+      >
         Editar registro
         <v-btn variant="text"
           @click.stop="dialogEdit = false"
@@ -205,6 +207,7 @@
       </v-card-text>
     </v-card>
   </v-dialog>
+  <!-- form agendamento -->
   <v-dialog
     v-model="dialogInfo"
     max-width="500px"
@@ -313,12 +316,13 @@
       },
       async editRegister(){
         const { valid } = await this.$refs.forms.validate()
+
         if(valid){
           expanseStore.editRegister(this.formEdit)
-        } else {
-          return
+          this.formEdit = {}
+          this.dialogEdit = false
         }
-        this.dialogEdit = false
+
       },
       deleteRegister(item){
         expanseStore.deleteRegister(item)

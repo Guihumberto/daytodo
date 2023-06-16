@@ -69,24 +69,9 @@ export const useExpanseStore = defineStore("expanse", {
       }
     },
     editRegister(item) {
-      let editExpanse = {
-        idList: item.idList,
-        name: item.name,
-        group: item.group,
-        mount: item.mount,
-        day: item.day,
-        dateCreate: item.dateCreate,
-        pay: item.pay,
-        agendado: item.agendado,
-        recorrent: item.recorrent,
-        fix: item.fix,
-        operator: item.operator,
-        mounthYear: item.mounthYear,
-      };
-
       const db = getDatabase();
       let userUid = getAuth().currentUser.uid
-      update(ref(db, `/todo/${userUid}/list/${editExpanse.idList}/tasks/${editExpanse.dateCreate}`), editExpanse);
+      update(ref(db, `/todo/${userUid}/list/${item.idList}/tasks/${item.dateCreate}`), item);
     },
     editRegisterStatus(item){
       const db = getDatabase();
