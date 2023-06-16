@@ -33,7 +33,7 @@
   </v-expand-transition>
   <v-dialog
     v-model="dialogDetalhesAgendados"
-    min-width="250"
+    max-width="450"
   >
     <v-card>
       <v-card-title class="bg-primary d-flex justify-space-between align-center">

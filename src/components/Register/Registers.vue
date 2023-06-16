@@ -315,8 +315,10 @@
         const { valid } = await this.$refs.forms.validate()
         if(valid){
           expanseStore.editRegister(this.formEdit)
-          this.dialogEdit = false
+        } else {
+          return
         }
+        this.dialogEdit = false
       },
       deleteRegister(item){
         expanseStore.deleteRegister(item)
