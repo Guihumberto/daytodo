@@ -17,6 +17,8 @@ import { registerPlugins } from '@/plugins'
 import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 
+
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDDTngbtzVy3mMrmXdVALxYDQ5wokkjBa4",
@@ -33,6 +35,8 @@ const fire = initializeApp(firebaseConfig);
 getDatabase(fire);
 
 const app = createApp(App)
+
+
 
 registerPlugins(app)
 

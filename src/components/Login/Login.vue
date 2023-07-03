@@ -6,9 +6,6 @@
         label="E-mail"
         placeholder="Digite seu e-mail"
         type="email"
-        :rules="[
-          (val) => isValidEmail(val) || 'Digite um endereço de e-mail válido',
-        ]"
         v-model="user.email"
         @keydown.esc="user.email = ''"
       ></v-text-field>
@@ -18,10 +15,8 @@
         class="my-3"
         type="password"
         v-model="user.password"
-        :rules="[(val) => val.length >= 6 || 'Insira 6 ou mais caracteres']"
-        @keydown.esc="user.email = ''"
       ></v-text-field>
-      <v-btn :disabled="!user.email || !user.password" block color="primary" type="submit">Entrar</v-btn>
+      <v-btn block color="primary" type="submit">Entrar</v-btn>
       <div class="links py-3 my-4 justify-space-between">
         <a href="#"> <v-icon size="small">mdi-account-plus</v-icon> Criar conta</a>
         <a href="#">Esqueceu sua senha?</a>
@@ -60,7 +55,7 @@ export default {
       const { valid } = await this.$refs.forms.validate()
       if(valid){
         auth.loginUser(this.user);
-        this.$router.push("/list").catch((err) => {});
+        this.$router.push("/list")
       }
 
     },
