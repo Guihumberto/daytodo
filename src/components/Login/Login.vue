@@ -5,13 +5,17 @@
       <v-text-field
         label="E-mail"
         placeholder="Digite seu e-mail"
+        prepend-inner-icon="mdi-email"
         type="email"
         v-model="user.email"
+        variant="solo"
         @keydown.esc="user.email = ''"
       ></v-text-field>
       <v-text-field
         label="Senha"
         placeholder="Digite sua senha"
+        variant="solo"
+        prepend-inner-icon="mdi-lock"
         class="my-3"
         type="password"
         v-model="user.password"
