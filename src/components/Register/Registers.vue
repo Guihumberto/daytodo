@@ -1,10 +1,13 @@
 <template>
+  <!-- download -->
   <div v-if="!isDownloadComplete">
     <v-progress-circular
       indeterminate
       color="white"
     ></v-progress-circular>
   </div>
+
+  <!-- list -->
   <div v-else class="list">
     <!-- pendentes -->
     <v-list class="wrapperlist" v-if="list.filter(x => !x.pay).length">
@@ -113,6 +116,7 @@
       <v-icon size="small">mdi-square-outline</v-icon>
       Não há registros pendentes
     </div>
+
     <!-- concluidos -->
     <v-list class="wrapperlist" v-if="list.filter(x => x.pay).length">
       <v-list-subheader class="bg-success">
@@ -257,7 +261,11 @@
         return listStore.readListPay.sort(this.order);
       },
       list(){
-        return listStore.readListTasks.sort(this.order);
+        let list = listStore.readListTasks.sort(this.order);
+        if(listStore.readFilter == 1){
+          list = list.filter(x => x.group == 'Cartão de Crédito')
+        }
+        return list
       },
       isDownloadComplete(){
         return listStore.readDownload

@@ -1,5 +1,5 @@
 <template>
-  <div class="list" v-if="idDownloadList">
+  <div class="list" v-if="listPeriod.length">
     <v-list class="wrapperlist">
       <v-list-item
         @click.stop="goTo(item.dateCreate)"
@@ -67,6 +67,8 @@
       indeterminate
       color="white"
     ></v-progress-circular>
+    <br>
+    <v-btn @click.stop="loadLists">Carregar</v-btn>
   </div>
 </template>
 
@@ -170,6 +172,10 @@
       cancel(){
         this.optionSelect = 0
         this.idEdit = 0
+      },
+      loadLists(){
+        console.log("carregar lista");
+        listStore.cargaList();
       }
     }
   }
@@ -178,6 +184,7 @@
 <style scoped>
 .load {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 50vh;

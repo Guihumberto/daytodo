@@ -1,21 +1,48 @@
 <template>
   <div class="org">
     <v-select
-      label="Organizar"
+      label="Filtrar"
       variant="outlined"
       density="compact"
+      :items="list"
+      item-title="name"
+      item-value="id"
+      v-model="selectItem"
     ></v-select>
     <recorrente />
   </div>
 </template>
 
 <script>
+  import { useListStore } from '@/store/ListStore'
+  const listStore = useListStore()
+
   import RecorrentesVue from './Recorrentes.vue'
   export default {
     components: {
       recorrente: RecorrentesVue
+    },
+    data(){
+      return{
+        selectItem: 0,
+        list: [
+          {id: 0, name:'Selecione'},
+          {id: 1, name:'Cartão de Crédito'},
+        ]
+      }
+    },
+    watch:{
+      'selectItem' :  {
+          handler: function (after, before) {
+            listStore.selectFilter(this.selectItem)
+          }
+      }
+    },
+    methods:{
+      selectFilter(){
+        listStore.selectFilter(this.selectItem)
+      }
     }
-
   }
 </script>
 

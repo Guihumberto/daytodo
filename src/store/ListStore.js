@@ -9,6 +9,7 @@ export const useListStore = defineStore("list", {
     downloadOk: false,
     listItems: null,
     idList: null,
+    filter: 0,
   }),
   getters: {
     readList() {
@@ -41,6 +42,9 @@ export const useListStore = defineStore("list", {
     },
     totalMonth(){
       return this.sumCredit - this.sumExpanse
+    },
+    readFilter(){
+      return this.filter
     }
   },
   actions: {
@@ -105,6 +109,9 @@ export const useListStore = defineStore("list", {
     clear(){
       this.tasks = []
       this.downloadOk = false
+    },
+    selectFilter(item){
+      this.filter = item
     }
   },
 });

@@ -130,7 +130,6 @@ export default {
     },
     methods:{
       removeAgendado(item){
-          console.log(item);
           item.agendado = false
           expanseStore.editRegister(item)
       }
