@@ -26,12 +26,18 @@
         <a href="#">Esqueceu sua senha?</a>
       </div>
     </v-form>
-
+    <div class="logoinwithgoogle">
+      <a @click.prevent="google()" class="border">
+        <v-icon size="small" class="mr-1">mdi-google</v-icon>
+        Entrar com Google
+      </a>
+    </div>
   </div>
 </template>
 
 <script>
 import { useAuthStore } from "@/store/AuthStore";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 const auth = useAuthStore();
 
 export default {
@@ -58,11 +64,29 @@ export default {
     async login() {
       const { valid } = await this.$refs.forms.validate()
       if(valid){
-        auth.loginUser(this.user);
-        this.$router.push("/list")
+        const auth = getAuth()
+        await signInWithEmailAndPassword(auth, this.user.email, this.user.password)
+          .then((response) => {
+            console.log(response, 'acertou');
+            this.$router.push("/list")
+          })
+          .catch((error) => {
+            console.log(error, 'errou');
+          });
       }
-
     },
+    google(){
+      const provider = new GoogleAuthProvider();
+      // firebase.auth().languageCode = "pt-br";
+      signInWithPopup(getAuth(), provider)
+      .then((result) => {
+        console.log(result.user)
+        this.$router.push("/list")
+      })
+      .catch((error) => {
+        console.log('deu erro', error)
+      })
+    }
   },
 };
 </script>
@@ -93,6 +117,22 @@ export default {
 .links a:hover {
   background: blue;
   box-shadow: 0 0 20px blue;
+}
+.logoinwithgoogle {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 50px;
+}
+.logoinwithgoogle a{
+  background: #000;
+  padding: 6px;
+  border: 2px solid rgb(220, 220, 231);
+  border-radius: 16px;
+  transition: 1s ;
+}
+.logoinwithgoogle a:hover{
+  background: #de5448;
 }
 @media (max-width: 1167px) {
   .wrapperLogin {

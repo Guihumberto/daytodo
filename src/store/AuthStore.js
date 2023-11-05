@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
-import { useRouter } from 'vue-router'
-const router = useRouter()
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+// import { useRouter } from 'vue-router'
+// const router = useRouter()
+const self = this
 
 
 import { useListStore } from "./ListStore";
@@ -48,6 +49,7 @@ export const useAuthStore = defineStore("auth", {
       await signInWithEmailAndPassword(auth, user.email, user.password)
         .then((response) => {
           console.log(response, 'acertou');
+          self.router.push({ name: 'Period' });
         })
         .catch((error) => {
           console.log(error, 'errou');
@@ -85,28 +87,19 @@ export const useAuthStore = defineStore("auth", {
         }
       });
     },
-    // async loginGmail() {
-    //   const provider = new firebase.auth.GoogleAuthProvider();
-    //   firebase.auth().languageCode = "pt-br";
-
-    //   try {
-    //     //login user
-    //     const result = await firebase.auth().signInWithPopup(provider);
-    //     const user = result.user;
-    //     this.setUser(user);
-    //     //register user
-    //     const usuario = {
-    //       name: user.displayName,
-    //       email: user.email,
-    //       uid: user.uid,
-    //       photo: user.photoURL,
-    //     };
-    //     //Guardar en Firestore
-    //     await db.collection("usuarios").doc(usuario.uid).set(usuario);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
+    async loginGmail() {
+      console.log('login com o google auth')
+      const provider = new GoogleAuthProvider();
+      // firebase.auth().languageCode = "pt-br";
+      signInWithPopup(getAuth(), provider)
+      .then((result) => {
+        console.log(result.user)
+        router.replace('/list')
+      })
+      .catch((error) => {
+        console.log('deu erro', error)
+      })
+    },
     setUser(user) {
       this.user = {
         email: user.email,
