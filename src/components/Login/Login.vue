@@ -20,6 +20,7 @@
         type="password"
         v-model="user.password"
       ></v-text-field>
+      <p v-if="errMsg" class="text-center text-red">{{ errMsg }}</p>
       <v-btn block color="primary" type="submit">Entrar</v-btn>
       <div class="links py-3 my-4 justify-space-between">
         <a href="#"> <v-icon size="small">mdi-account-plus</v-icon> Criar conta</a>
@@ -51,6 +52,7 @@ export default {
         email: "",
         password: "",
       },
+      errMsg: ''
     };
   },
   methods: {
@@ -72,6 +74,20 @@ export default {
           })
           .catch((error) => {
             console.log(error, 'errou');
+            switch (error.code) {
+              case "auth/invalid-email":
+                this.errMsg = "E-mail inválido"
+                break;
+              case "auth/user-not-found":
+                this.errMsg = "Nenhuma conta com este email foi encontrada"
+                break;
+              case "auth/wrong-password":
+                this.errMsg = "Senha errada"
+                break;
+              default:
+                this.errMsg = "E-mail ou senha incorreto"
+                break;
+            }
           });
       }
     },
