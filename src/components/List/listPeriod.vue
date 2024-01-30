@@ -66,8 +66,6 @@
       indeterminate
       color="white"
     ></v-progress-circular>
-    <br>
-    <v-btn @click.stop="loadLists">Carregar</v-btn>
   </div>
 </template>
 
@@ -178,7 +176,6 @@
         this.idEdit = 0
       },
       loadLists(){
-        console.log("carregar lista");
         listStore.cargaList();
       }
     }
